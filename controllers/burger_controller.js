@@ -16,17 +16,16 @@ router.get("/index", function(req, res) {
 		
 });
 
-router.post("/burger/new", function(req, res) {
-	models.burger.create({burger_name: req.body.burger_name}).then(function(instance) {
-		res.send({redirect:"/index"});
+router.post("/burger/create", function(req, res) {
+	models.burger.create({burger_name: req.body.burger_name}).then(function(result) {
+		res.redirect("/index");
 	});
 });
 
-router.post("/burger/update", function(req, res) {
-	models.burger.update({devoured: true}, {where: {burger_name: req.body.burger_name}}).then(function(instance) {
-		res.send({redirect:"/index"});
-	}); 
-	
+router.put("/burgers/update/:id", function(req, res) {
+	models.burger.update({devoured: req.body.devoured}, {where: {id: req.params.id}}).then(function(result) {
+		res.redirect("/index");
+	}); 	
 });
 
 module.exports = router;
